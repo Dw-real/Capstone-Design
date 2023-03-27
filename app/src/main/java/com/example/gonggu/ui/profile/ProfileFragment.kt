@@ -8,16 +8,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.gonggu.MainActivity
 import com.example.gonggu.R
 import com.example.gonggu.databinding.FragmentProfileBinding
+import com.example.gonggu.ui.location.LocationFragment
+import com.example.gonggu.ui.post.PostFragment
 
 class ProfileFragment : Fragment() {
 
-    private var _binding: FragmentProfileBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private var binding: FragmentProfileBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,14 +24,26 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
+        val root: View = binding!!.root
 
+        val activity = activity as MainActivity
+        val myPost = binding!!.myPost
+        val myLocation = binding!!.myLocation
+
+        // 내가 쓴 글
+        myPost.setOnClickListener {
+            activity.replaceFragment(PostFragment())
+        }
+        // 내 위치 설정
+        myLocation.setOnClickListener {
+            activity.replaceFragment(LocationFragment())
+        }
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+        binding = null
     }
 }

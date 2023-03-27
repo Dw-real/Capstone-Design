@@ -1,8 +1,10 @@
 package com.example.gonggu
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -29,6 +31,16 @@ class MainActivity : AppCompatActivity() {
 //    fun refresh(){
 //        this.onResume()
 //    }
+    fun replaceFragment(fragment : Fragment) {
+        Log.d("MainActivity","${fragment}")
+        supportFragmentManager
+            .beginTransaction()
+            .apply {
+                replace(R.id.fragment,fragment)
+                    .addToBackStack(null)
+                commit()
+            }
+    }
     companion object{
         lateinit var current : MainActivity
     }
