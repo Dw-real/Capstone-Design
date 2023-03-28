@@ -1,15 +1,11 @@
 package com.example.gonggu.ui.profile
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.gonggu.MainActivity
-import com.example.gonggu.R
 import com.example.gonggu.databinding.FragmentProfileBinding
 import com.example.gonggu.ui.location.LocationFragment
 import com.example.gonggu.ui.post.PostFragment
