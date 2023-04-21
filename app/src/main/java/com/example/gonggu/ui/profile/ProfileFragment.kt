@@ -1,5 +1,6 @@
 package com.example.gonggu.ui.profile
 
+import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.app.Activity
 import android.app.AlertDialog
@@ -45,7 +46,21 @@ class ProfileFragment : Fragment() {
         }
         // 내 위치 설정
         myLocation.setOnClickListener {
-            activity.replaceFragment(LocationFragment())
+            when {
+                checkSelfPermission(context, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                -> {
+                    activity.replaceFragment(LocationFragment())
+                }
+                shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION) -> {
+
+                }
+                else -> {
+                    requestPermissions(
+                        arrayOf(ACCESS_FINE_LOCATION),
+                        1001
+                    )
+                }
+            }
         }
 
         // 프로필 이미지 설정
@@ -55,7 +70,7 @@ class ProfileFragment : Fragment() {
                 -> {
                     startContentProvider()
                 }
-                shouldShowRequestPermissionRationale(android.Manifest.permission.READ_EXTERNAL_STORAGE) -> {
+                shouldShowRequestPermissionRationale(READ_EXTERNAL_STORAGE) -> {
                     showPermissionContextPopup()
                 }
                 else -> {
@@ -82,6 +97,7 @@ class ProfileFragment : Fragment() {
                     startContentProvider()
                 else
                     Toast.makeText(view?.context,"권한을 거부하셨습니다.", Toast.LENGTH_SHORT).show()
+                    showPermissionContextPopup()
             }
             else -> {
                 //
@@ -120,8 +136,8 @@ class ProfileFragment : Fragment() {
         AlertDialog.Builder(view?.context)
             .setTitle("권한이 필요합니다.")
             .setMessage("사진을 가져오기 위해 필요합니다.")
-            .setPositiveButton("동의") { _, _ ->
-                requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), 1010)
+            .setPositiveButton("확인") { _, _ ->
+                requestPermissions(arrayOf(READ_EXTERNAL_STORAGE), 1010)
             }
             .create()
             .show()
